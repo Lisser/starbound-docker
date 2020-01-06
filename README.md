@@ -1,33 +1,28 @@
-# Dockerized starbound runner and syncer
+# Welcome
+This repository holds my Starbound docker image. In order to build the image, the Starbound Linux binaries need to be present in starbound_1.4.4_linux folder.
 
-# Install Docker
+TODO: Remove all references to my own servers and make them configurable
+
+# Server Installation
+
+## Install Docker
 ```bash
 curl -fsSL https://get.docker.com | sh
 sudo usermod -aG docker root # or other user
 ```
 and log-in again
 
-# Login to Docker Hub to pull private image
+## Login to Docker Hub to pull private image
 ```bash
 docker login # and provide username password
 ```
 
-# Start Docker swarm
-```bash
-docker swarm init --advertise-addr 185.14.187.226 # or other ip
-```
-
-# Create Docker secret to store the GitHub Username
-```bash
-printf "<github-password>" | docker secret create github_password - # trailing dash is to read from stdin
-```
-
-# Create Docker service with Starbound image and attach secret
+## Start docker process with Github Password as environment variable
 ```bash
 docker run -itd --name starbound -p 21025:21025 --env github_password=<github_password> lisser/starbound-server
 ```
 
-# Expose port 21025 to allow clients
+## Expose port 21025 to allow clients to log on
 ```bash
 ufw allow 21025
 ```
